@@ -1,0 +1,215 @@
+:root {
+  --bg: #0f1226;
+  --panel: #1a1e3a;
+  --panel-edge: #2b3060;
+  --text: #e8eaff;
+  --text-dim: #9aa0c8;
+  --accent: #4f7cff;
+  --accent-2: #ff5c8a;
+  --radius: 12px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+#app {
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: calc(8px + var(--safe-top)) 10px calc(8px + var(--safe-bottom));
+  gap: 8px;
+}
+
+/* ---- Top bar ---- */
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  color: var(--text);
+  border-radius: var(--radius);
+  font-size: 18px;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  cursor: pointer;
+}
+
+.icon-btn:active { background: var(--panel-edge); }
+
+/* ---- Hold / Next previews ---- */
+#side-row {
+  display: flex;
+  gap: 8px;
+}
+
+.preview-box {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-box.wide { flex: 1; }
+
+.preview-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+#hold-canvas { width: 48px; height: 48px; }
+#next-canvas { flex: 1; height: 48px; }
+
+/* ---- Board ---- */
+#board-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#board {
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 2;
+  background: #0a0c1c;
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius);
+  touch-action: none;
+}
+
+/* ---- Overlay (menu / pause / game over) ---- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  background: rgba(10, 12, 28, 0.85);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.overlay.hidden { display: none; }
+
+#overlay-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  background: linear-gradient(90deg, #4f7cff, #b04fff, #ff5c8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#overlay-sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.big-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 48px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(79, 124, 255, 0.45);
+}
+
+.big-btn:active { transform: scale(0.97); }
+
+/* ---- Control pad ---- */
+#pad {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.pad-btn {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  color: var(--text);
+  border-radius: var(--radius);
+  font-size: 20px;
+  height: 52px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.pad-btn:active { background: var(--panel-edge); }
+
+.pad-btn.accent {
+  background: #232b58;
+  border-color: var(--accent);
+}
+
+/* Short screens: tighten chrome so the board keeps room */
+@media (max-height: 620px) {
+  .pad-btn { height: 44px; }
+  #hold-canvas, #next-canvas { height: 36px; }
+  #hold-canvas { width: 36px; }
+}

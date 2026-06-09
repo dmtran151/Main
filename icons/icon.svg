@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0f1226"/>
+  <!-- T tetromino -->
+  <g>
+    <rect x="116" y="146" width="88" height="88" rx="12" fill="#b04fff"/>
+    <rect x="212" y="146" width="88" height="88" rx="12" fill="#b04fff"/>
+    <rect x="308" y="146" width="88" height="88" rx="12" fill="#b04fff"/>
+    <rect x="212" y="242" width="88" height="88" rx="12" fill="#b04fff"/>
+  </g>
+  <!-- L and S accents -->
+  <rect x="116" y="338" width="88" height="88" rx="12" fill="#ff9f43"/>
+  <rect x="308" y="338" width="88" height="88" rx="12" fill="#4ade80"/>
+</svg>
