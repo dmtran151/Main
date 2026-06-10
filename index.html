@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0f1226" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="A mobile-first Tetris game. Swipe to move, tap to rotate, flick down to drop." />
+  <title>Tetris</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="stat">
+        <span class="stat-label">Score</span>
+        <span class="stat-value" id="score">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Level</span>
+        <span class="stat-value" id="level">1</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Lines</span>
+        <span class="stat-value" id="lines">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Best</span>
+        <span class="stat-value" id="best">0</span>
+      </div>
+      <button id="btn-pause" class="icon-btn" aria-label="Pause">⏸</button>
+    </header>
+
+    <div id="side-row">
+      <div class="preview-box">
+        <span class="preview-label">Hold</span>
+        <canvas id="hold-canvas" width="80" height="80"></canvas>
+      </div>
+      <div class="preview-box wide">
+        <span class="preview-label">Next</span>
+        <canvas id="next-canvas" width="240" height="80"></canvas>
+      </div>
+    </div>
+
+    <main id="board-wrap">
+      <canvas id="board" aria-label="Tetris playfield"></canvas>
+      <div id="overlay" class="overlay">
+        <h1 id="overlay-title">TETRIS</h1>
+        <p id="overlay-sub">Swipe to move · Tap to rotate<br />Flick down to drop · Drag down for soft drop</p>
+        <button id="btn-start" class="big-btn">Play</button>
+      </div>
+    </main>
+
+    <nav id="pad" aria-label="Game controls">
+      <button class="pad-btn" data-action="rotccw" aria-label="Rotate counter-clockwise">⟲</button>
+      <button class="pad-btn" data-action="left" aria-label="Move left">◀</button>
+      <button class="pad-btn" data-action="down" aria-label="Soft drop">▼</button>
+      <button class="pad-btn" data-action="right" aria-label="Move right">▶</button>
+      <button class="pad-btn" data-action="rotcw" aria-label="Rotate clockwise">⟳</button>
+      <button class="pad-btn accent" data-action="hold" aria-label="Hold piece">⇄</button>
+      <button class="pad-btn accent" data-action="drop" aria-label="Hard drop">⤓</button>
+    </nav>
+  </div>
+
+  <script src="tetris.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+    }
+  </script>
+</body>
+</html>
