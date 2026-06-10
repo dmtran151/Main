@@ -362,6 +362,19 @@ function gravitySeconds(level) {
   return Math.pow(0.8 - (l - 1) * 0.007, l - 1);
 }
 
+/* ---------------- Storage ----------------
+ * localStorage access throws in sandboxed viewers and some private
+ * browsing modes; degrade to a session-only high score instead of dying. */
+
+const storage = {
+  get(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* session-only */ }
+  },
+};
+
 /* ---------------- Sound (tiny WebAudio blips) ---------------- */
 
 const sound = {
@@ -407,7 +420,7 @@ const game = {
   score: 0,
   lines: 0,
   level: 1,
-  best: Number(localStorage.getItem(BEST_KEY) || 0),
+  best: Number(storage.get(BEST_KEY) || 0),
   combo: -1,
   backToBack: false,
   state: "menu",      // menu | playing | paused | over
@@ -589,7 +602,7 @@ function gameOver() {
   game.state = "over";
   if (game.score > game.best) {
     game.best = game.score;
-    localStorage.setItem(BEST_KEY, String(game.best));
+    storage.set(BEST_KEY, String(game.best));
   }
   sound.over();
   showOverlay("GAME OVER", `Score ${game.score.toLocaleString()} · Best ${game.best.toLocaleString()}`, "Play again");
